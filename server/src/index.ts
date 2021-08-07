@@ -1,3 +1,4 @@
+import 'dotenv-safe/config';
 import express from 'express';
 import { PORT } from './config/config';
 import routes from './routes';
