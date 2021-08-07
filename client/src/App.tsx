@@ -1,13 +1,15 @@
 import './App.css';
-import AuthenticationPage from './pages/authentication/AuthenticationPage';
-import SearchPage from './pages/search/SearchPage';
+import axios from 'axios';
 import {
   BrowserRouter as Router,
-  Link,
   Redirect,
   Route,
   Switch,
 } from 'react-router-dom';
+import AuthenticationPage from './pages/authentication/AuthenticationPage';
+import SearchPage from './pages/search/SearchPage';
+
+axios.defaults.baseURL = 'http://localhost:8080/api';
 
 function App() {
   return (
