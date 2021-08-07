@@ -1,6 +1,9 @@
 import { MovieType } from './movie';
 
-export type MoviePlotType = 'short' | 'full';
+export enum MoviePlotType {
+  Short = 'short',
+  Full = 'full',
+}
 
 export interface MovieSpecification {
   title: string;
