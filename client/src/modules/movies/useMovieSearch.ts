@@ -1,21 +1,28 @@
 import axios from 'axios';
+import { useCallback, useMemo } from 'react';
 import { useAsync } from '../../common/useAsync';
+import { Movie } from './api/movie';
 import { MovieSpecification } from './api/movie.specification';
 
 const MOVIES_SEARCH_ENDPOINT = '/movies/search';
 
 export const useMovieSearch = () => {
-  const movieFetch = useAsync((spec) => {
-    return axios.get(MOVIES_SEARCH_ENDPOINT, {
-      params: createParams(spec as MovieSpecification),
-    });
+  const movieFetch = useAsync<Movie>((spec: unknown) => {
+    return axios
+      .get<Movie>(MOVIES_SEARCH_ENDPOINT, {
+        params: createParams(spec as MovieSpecification),
+      })
+      .then((r) => r.data);
   });
 
-  const run = (spec: MovieSpecification): Promise<void> => {
-    return movieFetch.run(spec);
-  };
+  const run = useCallback(
+    (spec: MovieSpecification): Promise<void> => {
+      return movieFetch.run(spec);
+    },
+    [movieFetch]
+  );
 
-  return { ...movieFetch, run };
+  return useMemo(() => ({ ...movieFetch, run }), [movieFetch, run]);
 };
 
 function createParams(spec: MovieSpecification) {

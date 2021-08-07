@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Select from '../../common/components/Select';
 import { useDebounce } from '../../common/useDebounce';
-import { useIsMounted } from '../../common/useIsMounted';
 import {
   isNonWhiteSpace,
   trimToUndefined,
@@ -15,15 +14,15 @@ const movieTypeOptions = [
   [MovieType.Series, 'Series'],
   [MovieType.Episode, 'Episode'],
 ] as const;
+const defaultMovieType = MovieType.Movie as string;
 const yearOptions = createYearOptions();
-const defaultYearOption = new Date().getFullYear().toString();
+const defaultYear = new Date().getFullYear().toString();
 
 const SearchPage: React.FC = () => {
-  const getIsMounted = useIsMounted();
   const movieSearch = useMovieSearch();
   const [title, setTitle] = useState('');
-  const [type, setType] = useState('');
-  const [year, setYear] = useState('');
+  const [type, setType] = useState(defaultMovieType);
+  const [year, setYear] = useState(defaultYear);
   const debouncedTitle = useDebounce(title, 500);
 
   useEffect(() => {
@@ -35,6 +34,7 @@ const SearchPage: React.FC = () => {
         releaseYear: y === undefined ? y : +y,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedTitle, type, year]);
 
   return (
@@ -42,14 +42,22 @@ const SearchPage: React.FC = () => {
       <h1>Search</h1>
       <div className="search-bar">
         <input type="text" onChange={(e) => setTitle(e.target.value)} />
-        <Select options={movieTypeOptions} onValueChange={(v) => setType(v)} />
+        <Select
+          options={movieTypeOptions}
+          onValueChange={(v) => setType(v)}
+          selectedValue={defaultMovieType}
+        />
         <Select
           options={yearOptions}
           onValueChange={(v) => setYear(v)}
-          selectedValue={defaultYearOption}
+          selectedValue={defaultYear}
         />
       </div>
-      <div className="result">{JSON.stringify(movieSearch)}</div>
+      <div className="result">{JSON.stringify(movieSearch.value)}</div>
+      <img
+        src={movieSearch.value?.Poster}
+        alt={`Poster for ${movieSearch.value?.Title}`}
+      />
     </div>
   );
 };
