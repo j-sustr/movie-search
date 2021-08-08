@@ -32,8 +32,8 @@ function App() {
     <AuthProvider>
       <Router>
         <DebugRouter>
-          <div>
-            <header>
+          <div className="app">
+            <header className="app-header">
               <a href="/">Movie Search</a>
             </header>
 

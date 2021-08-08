@@ -1,0 +1,7 @@
+.app-page {
+  margin: 0 200px;
+}
+
+.form-error {
+  color: var(--error-text);
+}
