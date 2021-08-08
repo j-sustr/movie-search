@@ -1,3 +1,4 @@
+import './SearchPage.css';
 import React, { useEffect, useState } from 'react';
 import Select from '../../common/components/Select';
 import { useDebounce } from '../../common/useDebounce';
@@ -37,11 +38,18 @@ const SearchPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedTitle, type, year]);
 
+  const movie = movieSearch.value;
+  (window as any).movie = movie;
+
   return (
-    <div>
+    <div className="app-page">
       <h1>Search</h1>
       <div className="search-bar">
-        <input type="text" onChange={(e) => setTitle(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Title"
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <Select
           options={movieTypeOptions}
           onValueChange={(v) => setType(v)}
@@ -53,11 +61,28 @@ const SearchPage: React.FC = () => {
           selectedValue={defaultYear}
         />
       </div>
-      <div className="result">{JSON.stringify(movieSearch.value)}</div>
-      <img
-        src={movieSearch.value?.Poster}
-        alt={`Poster for ${movieSearch.value?.Title}`}
-      />
+      <div className="movie-container">
+        {movieSearch.loading && <div>Loading...</div>}
+        {movie?.Response === 'True' && (
+          <>
+            <div className="description-container">
+              <h2>{movie.Title}</h2>
+              <p>Type: {movie.Type}</p>
+              <p>Released: {movie.Released}</p>
+              <p>Genre: {movie.Genre}</p>
+              <p>IMDb Rating: {movie.imdbRating}</p>
+              <p>Director: {movie.Director}</p>
+              <p>Writers: {movie.Writer}</p>
+              <p>Actors: {movie.Actors}</p>
+              <p>{movie?.Plot}</p>
+            </div>
+            <div className="poster-container">
+              <img src={movie.Poster} alt={`Poster for ${movie.Title}`} />
+            </div>
+          </>
+        )}
+        {movie?.Response === 'False' && <div>Movie not found</div>}
+      </div>
     </div>
   );
 };
