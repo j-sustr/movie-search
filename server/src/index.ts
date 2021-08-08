@@ -13,7 +13,7 @@ if (!__prod__) {
 app.use(
   basicAuth({
     users: {
-      user: 'secret',
+      user: '1',
     },
   })
 );

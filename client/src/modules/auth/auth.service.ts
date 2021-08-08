@@ -13,6 +13,7 @@ export async function authenticate(
           username,
           password,
         },
+        validateStatus: () => true,
       }
     )
     .then((r) => r.status === 200);

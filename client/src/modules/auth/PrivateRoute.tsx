@@ -13,7 +13,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={({ location }) =>
-        auth.user ? (
+        auth.getIsAuthenticated() ? (
           children
         ) : (
           <Redirect

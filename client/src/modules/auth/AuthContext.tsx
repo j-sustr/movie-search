@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import * as auth from './auth.service';
 
 const USER_KEY = 'user';
@@ -9,7 +9,8 @@ export interface UserCredentials {
 }
 
 interface AuthContextValue {
-  user: UserCredentials | null;
+  getCredentials: () => UserCredentials | null;
+  getIsAuthenticated: () => boolean;
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -30,10 +31,14 @@ export function useAuth() {
 }
 
 function useProvideAuth() {
-  const [user, setUser] = useState<UserCredentials | null>(() => {
+  const getCredentials = (): UserCredentials | null => {
     const data = sessionStorage.getItem(USER_KEY);
     return data ? JSON.parse(data) : null;
-  });
+  };
+
+  const getIsAuthenticated = (): boolean => {
+    return getCredentials() !== null;
+  };
 
   const login = async (username: string, password: string) => {
     const success = await auth.authenticate(username, password);
@@ -49,11 +54,11 @@ function useProvideAuth() {
 
   const logout = async () => {
     sessionStorage.removeItem(USER_KEY);
-    setUser(null);
   };
 
   return {
-    user,
+    getCredentials,
+    getIsAuthenticated,
     login,
     logout,
   };
