@@ -11,6 +11,10 @@ export const useMovieSearch = () => {
     return axios
       .get<Movie>(MOVIES_SEARCH_ENDPOINT, {
         params: createParams(spec as MovieSpecification),
+        auth: {
+          username: 'user',
+          password: 'secret',
+        },
       })
       .then((r) => r.data);
   });
