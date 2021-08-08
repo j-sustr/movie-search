@@ -8,12 +8,14 @@ import {
 } from 'react-router-dom';
 import AuthenticationPage from './pages/authentication/AuthenticationPage';
 import SearchPage from './pages/search/SearchPage';
+import PrivateRoute from './modules/auth/PrivateRoute';
+import { AuthProvider } from './modules/auth/AuthContext';
 
 axios.defaults.baseURL = 'http://localhost:8080/api';
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <Router>
         <div>
           <header>
@@ -24,14 +26,14 @@ function App() {
             <Route path="/authentication">
               <AuthenticationPage />
             </Route>
-            <Route path="/search">
+            <PrivateRoute path="/search">
               <SearchPage />
-            </Route>
+            </PrivateRoute>
             <Redirect to="/search" />
           </Switch>
         </div>
       </Router>
-    </div>
+    </AuthProvider>
   );
 }
 
