@@ -1,12 +1,15 @@
 import { Request, Response, Router } from 'express';
 import logger from '../../common/logger';
 import { validateRequestSchema } from '../../common/middleware/validate-request-schema.middleware';
+import redisClient from '../../common/redis-client';
 import { MovieType } from './models/movie';
 import { MoviePlotType } from './models/movie.specification';
+import { RedisMoviesCache } from './movies-cache';
 import { MoviesService } from './movies.service';
 import moviesSearchSchema from './schemas/movie-search.schema';
 
-const moviesService = new MoviesService();
+const moviesCache = new RedisMoviesCache(redisClient);
+const moviesService = new MoviesService(moviesCache);
 const router = Router();
 
 router.get(
