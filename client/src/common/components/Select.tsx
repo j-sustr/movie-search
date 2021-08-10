@@ -2,19 +2,19 @@ export type SelectOption = readonly [key: string, value: string];
 
 interface SelectProps {
   options: ReadonlyArray<SelectOption>;
+  value?: string;
   onValueChange: (value: string) => void;
-  selectedValue?: string;
 }
 
 const Select: React.FC<SelectProps> = ({
   options,
+  value,
   onValueChange = () => {},
-  selectedValue,
   ...rest
 }) => {
   return (
     <select
-      defaultValue={selectedValue}
+      value={value}
       onChange={({ target: { value } }) => onValueChange(value)}
       {...rest}
     >

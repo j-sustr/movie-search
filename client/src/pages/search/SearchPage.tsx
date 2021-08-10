@@ -48,17 +48,18 @@ const SearchPage: React.FC = () => {
         <input
           type="text"
           placeholder="Title"
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <Select
           options={movieTypeOptions}
+          value={type}
           onValueChange={(v) => setType(v)}
-          selectedValue={defaultMovieType}
         />
         <Select
           options={yearOptions}
+          value={year}
           onValueChange={(v) => setYear(v)}
-          selectedValue={defaultYear}
         />
       </div>
       <div className="movie-container">
