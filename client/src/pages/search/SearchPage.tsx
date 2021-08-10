@@ -39,7 +39,6 @@ const SearchPage: React.FC = () => {
   }, [debouncedTitle, type, year]);
 
   const movie = movieSearch.value;
-  (window as any).movie = movie;
 
   return (
     <div className="app-page">
