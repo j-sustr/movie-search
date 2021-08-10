@@ -1,7 +1,38 @@
 .app-page {
-  margin: 0 200px;
+  margin: 0 10px;
+}
+
+.app-header {
+  height: 80px;
+  max-width: none;
+  padding: 0;
+  padding-left: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: lightgray;
+}
+
+.app-header a {
+  color: black;
+  font-size: 1.5rem;
 }
 
 .form-error {
   color: var(--error-text);
+}
+
+@media screen and (min-width: 640px) {
+  .app-page {
+    margin: 0 100px;
+    padding-top: 30px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .app-page {
+    margin: 0 200px;
+  }
 }

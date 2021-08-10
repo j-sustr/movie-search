@@ -34,18 +34,19 @@ function App() {
         <DebugRouter>
           <div className="app">
             <header className="app-header">
-              <a href="/">Movie Search</a>
+              <a href="/">Movies</a>
             </header>
-
-            <Switch>
-              <Route path="/authentication">
-                <AuthenticationPage />
-              </Route>
-              <PrivateRoute path="/search">
-                <SearchPage />
-              </PrivateRoute>
-              <Redirect to="/search" />
-            </Switch>
+            <div className="app-content">
+              <Switch>
+                <Route path="/authentication">
+                  <AuthenticationPage />
+                </Route>
+                <PrivateRoute path="/search">
+                  <SearchPage />
+                </PrivateRoute>
+                <Redirect to="/search" />
+              </Switch>
+            </div>
           </div>
         </DebugRouter>
       </Router>
