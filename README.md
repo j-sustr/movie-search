@@ -1,5 +1,5 @@
 # Movie Search
-## Start the app
+## Start the app with Docker
 1. Create `server/.env.production` file 
 ```
 LOG_DIR=./logs
